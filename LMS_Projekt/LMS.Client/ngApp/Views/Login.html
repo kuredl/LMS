@@ -1,0 +1,11 @@
+﻿
+    <form class="form" style="max-width:360px;">
+        <h1>School Login</h1>
+        <input type="text" placeholder="Username" name="Name" ng-model="loginData.userName"/>
+        <input type="password" placeholder="Password" name="Password" ng-model="loginData.password" />
+        <input class="btn" type="button" value="Login &raquo;" ng-click="login()" />
+        <div data-ng-hide="message == ''" class="alert alert-danger">
+            {{message}}
+        </div>
+        <p class="message">Not registered? <a href="#">Create an account</a></p>
+    </form>

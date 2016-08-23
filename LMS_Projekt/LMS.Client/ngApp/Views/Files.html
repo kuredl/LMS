@@ -1,0 +1,12 @@
+﻿<div ng-init="initFiles()">
+    <div style="background-color:#ff6a00;height:150px;" class="col-md-3" ng-repeat="folder in currentFolder.mySubFolders">
+        {{folder.name}} 
+    </div>
+    <div style="background-color:#ff6a00;height:150px;" class="col-md-3" ng-repeat="file in currentFolder.myFiles">
+        {{file.name +'.'+ file.fileExtension}}
+        <div style="height:32px;background-color:black" ng-click="downloadFile(file)">
+            download
+        </div>
+    </div>
+    
+</div>

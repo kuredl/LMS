@@ -1,0 +1,68 @@
+﻿<div class="homeWindow" ng-init="homeInit()">
+    <div ng-controller="indexController">
+        <div class="navbar navbar-inverse navbar-static-top" style="" role="navigation" ng-hide="!authentication.isAuth">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" style="padding-left:48px">
+                        <img  src="/Content/img/download.png" class="navbar-profile-picture" />
+                        {{authentication.userName}}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="logOut()">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+           
+            <div class="mailbox">
+                <p style="color:white;position:relative;text-align:center;margin: 0 auto;padding-top:5px;">2</p>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-hide="!authentication.isAuth"><p>Notifications:</p></li>                
+            </ul>            
+        </div>
+    </div>
+    <div class="row" style="margin:0px 1px 0px 1px">
+        <div class="jumbotron" style="position:relative;background-image:url('/Img/learning.jpg')">
+            <div class="text">
+                <h3>
+                    Learning is fun!
+                </h3>
+                <p>Welcome, {{authentication.userName}}!</p>
+            </div>            
+        </div>
+    </div>
+    <div class="row gridbuttons" style="margin:0px 1px 0px 1px">
+        <div class="col-md-4">
+            <div class="navbutton green">
+                <span style="color:#5fc68a" class="glyphicon glyphicon-book"></span>
+                <p>Your Courses &raquo;</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="navbutton blue">
+                <span style="color:#649abe" class="glyphicon glyphicon-cog"></span>
+                <p>Settings &raquo;</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="navbutton red">
+                <span style="color:#cb756c" class="glyphicon glyphicon-calendar"></span>
+                <p>Schedule &raquo;</p>
+            </div>
+        </div>
+    </div>
+    <div class="row gridbuttons" style="margin:0px 1px 0px 1px">
+        <div class="col-md-4">
+            <div class="navbutton purple">
+                <span style="color:mediumpurple" class="glyphicon glyphicon-file"></span>
+                <p>Manage your files &raquo;</p>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="navbutton purple" style="background-image:url(/Img/book-reading-learning-letters.jpg); background-size:cover; background-position:20%">
+                <p>Stuff &raquo;</p>
+            </div>
+        </div>
+    </div>
+</div>
