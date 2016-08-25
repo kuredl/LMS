@@ -1,4 +1,5 @@
-﻿using LMS_Server.Models;
+﻿using LMS.Server.Models;
+using LMS_Server.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,7 @@ namespace LMS_Server.DAL {
         }
         public DbSet<FileItem> Files { get; set; }
         public DbSet<Folder> Folders { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Course> Courses { get; set; }
     }
 }
