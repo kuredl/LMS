@@ -3,36 +3,18 @@ namespace LMS_Server.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class newStuff : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.FileItems",
+                "dbo.Courses",
                 c => new
                     {
-                        ID = c.Int(nullable: false, identity: true),
-                        Path = c.String(),
-                        Name = c.String(),
-                        FileExtension = c.String(),
-                        Key = c.String(),
-                        FolderKey = c.Int(),
+                        CourseId = c.Int(nullable: false, identity: true),
+                        CourseSubject = c.String(),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Folders", t => t.FolderKey)
-                .Index(t => t.FolderKey);
-            
-            CreateTable(
-                "dbo.Folders",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Folder_ID = c.Int(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Folders", t => t.Folder_ID)
-                .Index(t => t.Folder_ID);
+                .PrimaryKey(t => t.CourseId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -83,6 +65,33 @@ namespace LMS_Server.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.FileItems",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Path = c.String(),
+                        Name = c.String(),
+                        FileExtension = c.String(),
+                        Key = c.String(),
+                        FolderKey = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Folders", t => t.FolderKey)
+                .Index(t => t.FolderKey);
+            
+            CreateTable(
+                "dbo.Folders",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Folder_ID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Folders", t => t.Folder_ID)
+                .Index(t => t.Folder_ID);
+            
+            CreateTable(
                 "dbo.AspNetUserRoles",
                 c => new
                     {
@@ -96,6 +105,21 @@ namespace LMS_Server.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
+                "dbo.Lessons",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Description = c.String(),
+                        Week = c.Int(nullable: false),
+                        DayOfWeek = c.Int(nullable: false),
+                        LessonTime = c.Int(nullable: false),
+                        CourseId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .Index(t => t.CourseId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -106,50 +130,72 @@ namespace LMS_Server.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
-                "dbo.ApplicationUserFileItems",
+                "dbo.ApplicationUserCourses",
                 c => new
                     {
                         ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
-                        FileItem_ID = c.Int(nullable: false),
+                        Course_CourseId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.ApplicationUser_Id, t.FileItem_ID })
+                .PrimaryKey(t => new { t.ApplicationUser_Id, t.Course_CourseId })
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id, cascadeDelete: true)
-                .ForeignKey("dbo.FileItems", t => t.FileItem_ID, cascadeDelete: true)
+                .ForeignKey("dbo.Courses", t => t.Course_CourseId, cascadeDelete: true)
                 .Index(t => t.ApplicationUser_Id)
-                .Index(t => t.FileItem_ID);
+                .Index(t => t.Course_CourseId);
+            
+            CreateTable(
+                "dbo.FileItemApplicationUsers",
+                c => new
+                    {
+                        FileItem_ID = c.Int(nullable: false),
+                        ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => new { t.FileItem_ID, t.ApplicationUser_Id })
+                .ForeignKey("dbo.FileItems", t => t.FileItem_ID, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id, cascadeDelete: true)
+                .Index(t => t.FileItem_ID)
+                .Index(t => t.ApplicationUser_Id);
             
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Lessons", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUsers", "RootFolderID", "dbo.Folders");
-            DropForeignKey("dbo.ApplicationUserFileItems", "FileItem_ID", "dbo.FileItems");
-            DropForeignKey("dbo.ApplicationUserFileItems", "ApplicationUser_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.FileItemApplicationUsers", "ApplicationUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.FileItemApplicationUsers", "FileItem_ID", "dbo.FileItems");
             DropForeignKey("dbo.FileItems", "FolderKey", "dbo.Folders");
             DropForeignKey("dbo.Folders", "Folder_ID", "dbo.Folders");
-            DropIndex("dbo.ApplicationUserFileItems", new[] { "FileItem_ID" });
-            DropIndex("dbo.ApplicationUserFileItems", new[] { "ApplicationUser_Id" });
+            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ApplicationUserCourses", "Course_CourseId", "dbo.Courses");
+            DropForeignKey("dbo.ApplicationUserCourses", "ApplicationUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropIndex("dbo.FileItemApplicationUsers", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.FileItemApplicationUsers", new[] { "FileItem_ID" });
+            DropIndex("dbo.ApplicationUserCourses", new[] { "Course_CourseId" });
+            DropIndex("dbo.ApplicationUserCourses", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Lessons", new[] { "CourseId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.Folders", new[] { "Folder_ID" });
+            DropIndex("dbo.FileItems", new[] { "FolderKey" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUsers", new[] { "RootFolderID" });
-            DropIndex("dbo.Folders", new[] { "Folder_ID" });
-            DropIndex("dbo.FileItems", new[] { "FolderKey" });
-            DropTable("dbo.ApplicationUserFileItems");
+            DropTable("dbo.FileItemApplicationUsers");
+            DropTable("dbo.ApplicationUserCourses");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Lessons");
             DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.Folders");
+            DropTable("dbo.FileItems");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Folders");
-            DropTable("dbo.FileItems");
+            DropTable("dbo.Courses");
         }
     }
 }

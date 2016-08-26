@@ -30,11 +30,11 @@ namespace LMS_Server {
             Console.Clear();
             Console.WriteLine("Katana server booting up:");
             Console.WriteLine("----------------------------------------");
-            var options = new StartOptions("http://*:8080") {
+            var options = new StartOptions("http://localhost:8080") {
                 ServerFactory = "Microsoft.Owin.Host.HttpListener"
             };
             if (args.Contains("-local")){
-                options.Urls[0] = "http://*:8080";
+                options.Urls[0] = "http://localhost:8080";
             }
             using (WebApp.Start<Startup>(options)){
                 Console.WriteLine("Started Server on: " +options.Urls[0]);
