@@ -1,0 +1,67 @@
+﻿
+
+    <div class="container">
+        <div ng-init="getAllCourses()" style="width: 500px">
+
+            <h1 style="color: white"> Manage Courses</h1>
+            <ul class="list-group">
+            <li ng-repeat="course in _Courses" class="list-group-item">
+                <b> Course: </b>{{course.courseSubject}}
+                <!--<b> CourseId: </b>{{course.courseId}}-->
+                <ul><li ng-repeat="attendant in course.attendants">
+                    <b> Course Attendant: </b>{{attendant.userName}}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+            <hr style="color: white">
+            <br>
+
+
+            <select id="SelectCourse" ng-model="selectedCourse">
+                <option value="">Välj en kurs</option>
+                <option ng-repeat="course in _Courses" value="{{course.courseId}}">{{course.courseSubject}}</option>
+
+            </select>
+            <br><br>
+
+         <p style="color: white">Add attendants</p>
+            <form action="" ng-submit="addUserToCourse()" ng-init="getAllUsers()">
+                <ul class="list-group">
+                    <li ng-repeat="user in _Users" class="list-group-item">
+                        <p>
+                            <input id="check" type="checkbox" ng-model="user.selected" value="{{user.id}}">
+                            <b> Name: </b>{{user.userName}}
+                        </p>
+                    </li>
+                </ul>
+
+                <input type="button" ng-click="addUsers()" class=" btn btn-success" value="Register">
+            </form>
+            <br><br>
+
+            <hr style="color: white">
+
+            <form action="" ng-submit="addNewCourse(course)">
+                <input type="text" id="c1" class="form-control" ng-model="course.courseSubject" placeholder="Course" />
+                <!--<input type="" class="form-control" ng-model="" />-->
+                <br>
+ 
+                <input type="submit" class=" btn btn-success" value="Add new Course">
+           </form>
+
+            <hr style="color: white">
+
+            <form ng-submit="deleteCourse(course)">
+                <select id="del" ng-model="course.courseId">
+                    <option value="">Välj en kurs</option>
+                    <option ng-repeat="course in _Courses" value="{{course.courseId}}">{{course.courseSubject}}</option>
+
+                </select>
+                <input type="submit" class=" btn btn-danger" value="Delete Course">
+                <br><br>
+            </form>
+
+        </div>
+    </div>
+

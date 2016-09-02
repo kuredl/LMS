@@ -18,4 +18,13 @@ namespace LMS.Server.Models
         public virtual ICollection<Lesson> Lessons { get; set; }
         public virtual ICollection<ApplicationUser> Attendants { get; set; }
     }
+
+    //public class CourseAttendant
+    //{
+    //    [Key]
+    //    public virtual Course CourseId { get; set; }
+    //    [Key]
+    //    public virtual ApplicationUser UserId { get; set; }
+
+    //}
 }

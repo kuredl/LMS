@@ -1,11 +1,11 @@
 ﻿'use strict';
-app.controller('homeController', ['$scope', 'authService', '$http', function ($scope, authService, $http) {
+app.controller('homeController', ['$scope', '$http', 'API', function ($scope, $http, API) {
     $scope.pageClass = 'page-home';
-    $scope.authentication = authService.authentication;
 
     $scope.homeInit = function () {
-        return $http.get(serviceBase + 'api/home/get').then(function (results) {
-            return results;
+        API.get('api/admin/GetAllCourses').then(function (data) {
+            console.log(data);
+
         });
     };
 }]);

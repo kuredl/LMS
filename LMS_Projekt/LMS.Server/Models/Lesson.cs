@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,6 +33,7 @@ namespace LMS.Server.Models
 
         [ForeignKey("Course")]
         public int CourseId { get; set; }
+        [JsonIgnore]
         public virtual Course Course { get; set; }
 
         //public virtual ICollection<ApplicationUser> Attendants { get; set; }
