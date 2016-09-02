@@ -32,7 +32,7 @@ namespace LMS.Server.Controllers
 
         public async Task<IHttpActionResult> GetAllCourses()
         {
-            return Ok(db.Courses.ToList());
+            return Ok(db.Courses.OrderBy( c=> c.CourseSubject).ToList());
         }
 
         public async Task<IHttpActionResult> GetCourseById(string Id)
