@@ -2,6 +2,7 @@
 using LMS_Server.DAL;
 using LMS_Server.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,11 @@ namespace LMS.Server.Controllers
 
     {
         private ApplicationContext db = new ApplicationContext();
+
+        public async Task<IHttpActionResult> GetRoles()
+        {
+            return Ok(db.Roles.ToList());
+        }
         
         //[Authorize(Roles="administrator")]
         public async Task<IHttpActionResult> GetAllUsers()
@@ -93,7 +99,29 @@ namespace LMS.Server.Controllers
            
         }
 
- 
+        //[HttpGet]
+        //public async Task<IHttpActionResult> AddUserToRole(string rId, string uId)
+        //{
+
+        //    //var roleStore = new RoleStore<IdentityRole>(db);
+        //    //var roleManager = new RoleManager<IdentityRole>(roleStore);
+        //    //var userStore = new UserStore<ApplicationUser>(db);
+        //    //var userManager = new UserManager<ApplicationUser>(userStore);
+
+        //    var role = db.Roles.Find(rId);
+        //    var user = db.Users.Find(uId);
+        //    if (user == null || role == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    //userManager.AddToRole(user, role);
+
+        //    role.Users.Add(user);
+        //    db.SaveChanges();
+        //    return Ok();
+
+        //}
 
 
     }
