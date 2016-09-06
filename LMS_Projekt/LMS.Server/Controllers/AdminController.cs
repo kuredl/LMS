@@ -99,29 +99,23 @@ namespace LMS.Server.Controllers
            
         }
 
-        //[HttpGet]
-        //public async Task<IHttpActionResult> AddUserToRole(string rId, string uId)
-        //{
+        [HttpGet]
+        public async Task<IHttpActionResult> AddUserToRole(string rId, string uId)
+        {
 
-        //    //var roleStore = new RoleStore<IdentityRole>(db);
-        //    //var roleManager = new RoleManager<IdentityRole>(roleStore);
-        //    //var userStore = new UserStore<ApplicationUser>(db);
-        //    //var userManager = new UserManager<ApplicationUser>(userStore);
+        var roleStore = new RoleStore<IdentityRole>(db);
+        var roleManager = new RoleManager<IdentityRole>(roleStore);
+        var userStore = new UserStore<ApplicationUser>(db);
+        var userManager = new UserManager<ApplicationUser>(userStore);
 
-        //    var role = db.Roles.Find(rId);
-        //    var user = db.Users.Find(uId);
-        //    if (user == null || role == null)
-        //    {
-        //        return NotFound();
-        //    }
+        var role = roleManager.FindById(rId);
 
-        //    //userManager.AddToRole(user, role);
+        await userManager.AddToRoleAsync(uId, role.Name);
+            
+            
+        return Ok();
 
-        //    role.Users.Add(user);
-        //    db.SaveChanges();
-        //    return Ok();
-
-        //}
+        }
 
 
     }
