@@ -19,7 +19,7 @@
 
 
             <select id="SelectCourse" ng-model="selectedCourse">
-                <option value="">Välj en kurs</option>
+                <option value="">Select a Course</option>
                 <option ng-repeat="course in _Courses" value="{{course.courseId}}">{{course.courseSubject}}</option>
 
             </select>
@@ -43,24 +43,45 @@
             <hr style="color: white">
 
             <form action="" ng-submit="addNewCourse(course)">
-                <input type="text" id="c1" class="form-control" ng-model="course.courseSubject" placeholder="Course" />
-                <!--<input type="" class="form-control" ng-model="" />-->
+                <input type="text" id="c1" class="form-control" ng-model="course.courseSubject" placeholder="Enter Name of Course" />
                 <br>
- 
-                <input type="submit" class=" btn btn-success" value="Add new Course">
+                <input type="submit" class=" btn btn-xs btn-success" value="Add new Course">
            </form>
 
             <hr style="color: white">
 
             <form ng-submit="deleteCourse(course)">
                 <select id="del" ng-model="course.courseId">
-                    <option value="">Välj en kurs</option>
+                    <option value="">Select a Course</option>
                     <option ng-repeat="course in _Courses" value="{{course.courseId}}">{{course.courseSubject}}</option>
 
                 </select>
-                <input type="submit" class=" btn btn-danger" value="Delete Course">
+                <input type="submit" class=" btn btn-xs btn-danger" value="Delete Course">
                 <br><br>
             </form>
+
+            <hr style="color: white">
+            <p style="color: white">Assign Roles to Users</p>
+            <p>
+                <select id="SelectUser" ng-model="selectedUser">
+                    <option value="">Select a User</option>
+                    <option ng-repeat="user in _Users" value="{{user.id}}">{{user.userName}}</option>
+                 </select>
+            </p>
+            <br>
+            
+            <form action="" ng-init="getRoles()">
+                <ul class="list-group">
+                    <li ng-repeat="role in _Roles" class="list-group-item">
+                        <p>
+                            <input id="" type="checkbox" ng-model="role.selectedRole" value="{{role.id}}">
+                            <b> Role: </b>{{role.name}} | 
+                        </p
+                    </li>
+                </ul>
+                <input type="button" ng-click="addRoles()" class=" btn btn-success" value="Ooooooops!">
+            </form>            
+
 
         </div>
     </div>
