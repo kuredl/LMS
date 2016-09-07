@@ -13,6 +13,14 @@ app.config(function ($routeProvider) {
         controller: 'filesController',
         templateUrl: 'ngApp/views/files.html'
     });
+    $routeProvider.when('/courses', {
+        controller: 'coursesController',
+        templateUrl: 'ngApp/views/courses.html'
+    });
+    $routeProvider.when('/register', {
+        controller: 'signupController',
+        templateUrl: 'ngApp/views/register.html'
+    });
     $routeProvider.otherwise({ redirectTo: '/login' });
 });
 
