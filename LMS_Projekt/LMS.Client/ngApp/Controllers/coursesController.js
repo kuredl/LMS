@@ -3,18 +3,17 @@ app.controller('coursesController', ['$scope', '$http', 'API', function ($scope,
     $scope.pageClass = 'page-home';
     $scope._Courses;
     $scope._Users;
-    //@$scope._CourseAttendants;
-    $scope._Roles;
+    //$scope._Roles;
 
-    $scope.getRoles = function () {
-        API.get('api/admin/GetRoles').then(function (data) {
-            console.log(data);
-            for (var i = 0; i < data.length; i++) {
-                data[i].selected = false;
-            }
-            $scope._Roles = data;
-        });
-    };
+    //$scope.getRoles = function () {
+    //    API.get('api/admin/GetRoles').then(function (data) {
+    //        console.log(data);
+    //        for (var i = 0; i < data.length; i++) {
+    //            data[i].selected = false;
+    //        }
+    //        $scope._Roles = data;
+    //    });
+    //};
 
     $scope.getAllCourses = function () {
         API.get('api/admin/GetAllCourses').then(function (data) {
@@ -50,16 +49,16 @@ app.controller('coursesController', ['$scope', '$http', 'API', function ($scope,
 
     }
 
-    $scope.addRoles = function () {
-        var roles = $scope._Roles;
-        for (var i = 0; i < roles.length; i++) {
-            console.log("looping");
-            if (roles[i].selectedRole)
-                addUserToRole(roles[i].id, $scope.selectedUser);
-        }
-        $scope.getRoles();
+    //$scope.addRoles = function () {
+    //    var roles = $scope._Roles;
+    //    for (var i = 0; i < roles.length; i++) {
+    //        console.log("looping");
+    //        if (roles[i].selectedRole)
+    //            addUserToRole(roles[i].id, $scope.selectedUser);
+    //    }
+    //    $scope.getRoles();
 
-    }
+    //}
 
 
     var addUserToCourse = function (c1, u2){
@@ -69,13 +68,13 @@ app.controller('coursesController', ['$scope', '$http', 'API', function ($scope,
        });
     };
 
-    var addUserToRole = function (r1, u2) {
-        console.log("hej");
-        API.get('api/admin/AddUserToRole/?rId=' + r1 + '&uId=' + u2).then(function (data) {
-            console.log(data);
-            $scope._Roles = data;
-        });
-    };
+    //var addUserToRole = function (r1, u2) {
+    //    console.log("hej");
+    //    API.get('api/admin/AddUserToRole/?rId=' + r1 + '&uId=' + u2).then(function (data) {
+    //        console.log(data);
+    //        $scope._Roles = data;
+    //    });
+    //};
 
     $scope.addNewCourse = function (c1) {
         API.post('api/admin/AddNewCourse/',c1).then(function (data) {
