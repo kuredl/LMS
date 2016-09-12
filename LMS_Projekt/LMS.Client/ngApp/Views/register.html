@@ -1,0 +1,89 @@
+﻿<div class="container">
+    <div style="width: 500px">
+        <h1 style="color: white">Create New UserAccount</h1>
+        <form id="regForm" ng-submit="signUp()" ng-model="regUser">
+            <div class="row">
+                <div class="col-md-5">
+                    <p style="color: white">User Name: </p>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" id="uName" ng-model="registration.userName" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <p style="color: white">Password: </p>
+                </div>
+                <div class="col-md-7">
+                    <input type="password" id="nPwd" ng-model="registration.passWord" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <p style="color: white">Confirm Password: </p>
+                </div>
+                <div class="col-md-7">
+                    <input type="password" id="confPwd" ng-model="registration.confirmPassword" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" class=" btn btn-xs btn-success" value="Register">
+                </div>
+            </div>
+        </form>
+        <hr style="color: white">
+
+        <form ng-submit="deleteUser()">
+            <select id="del" ng-model="selectedUser">
+                <option value="">Select a User</option>
+                <option ng-repeat="user in _Users" value="{{user.id}}">{{user.userName}}</option>
+
+            </select>
+            <input type="submit" class=" btn btn-xs btn-danger" value="Delete User">
+            <br><br>
+        </form>        
+            
+            <p style="color: white">Assign Roles to Users</p>
+        <p>
+            <div ng-init="getUsers()">
+                <select id="SelectUser" ng-model="selectedUser">
+                    <option value="">Select a User</option>
+                    <option ng-repeat="user in _Users" value="{{user.id}}">{{user.userName}}</option>
+                </select>
+            </div>
+        </p>
+        <br>
+
+        <form action="" ng-init="getRoles()">
+            <ul class="list-group">
+                <li ng-repeat="role in _Roles" class="list-group-item">
+                    <p>
+                        <input id="" type="checkbox" ng-model="role.selectedRole" value="{{role.id}}">
+                        <b> Role: </b>{{role.name}} |
+                    </p>
+                </li>
+            </ul>
+            <input type="button" ng-click="addRoles()" class="btn btn-xs btn-success" value="Connect to Role">
+        </form>
+
+
+        <hr style="color: white">
+        <div ng-init="listUsersWithRoles()">
+            <p style="color: white">List Users with Roles | track by $index</p>
+            <ul class="list-group">
+                <li ng-repeat="(key, role) in _UsersWithRoles" class="list-group-item">
+                    <p><b>Role:</b> {{key}}</p>
+                    <ul class="list-group">
+                        <li ng-repeat="user in role" class="list-group-item">
+                            <p><b>Users in role:</b> {{user.userName}}</p>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</div>
