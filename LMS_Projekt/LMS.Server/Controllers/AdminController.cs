@@ -26,13 +26,36 @@ namespace LMS.Server.Controllers
         //[Authorize(Roles="administrator")]
         public async Task<IHttpActionResult> GetAllUsers()
         {
-
-            return Ok(db.Users.ToList());
+          
+            return Ok(db.Users.OrderBy(u => u.UserName).ToList());
         }
 
         public async Task<IHttpActionResult> GetUserById(string Id)
         {
             return Ok(db.Users.Find(Id));
+        }
+
+ 
+        public async Task<IHttpActionResult> GetUsersWithRoles()
+        {
+
+            var users = db.Users.OrderBy(u => u.UserName).ToList();
+
+            var roles = db.Roles.ToList();
+
+            Dictionary<string, List<ApplicationUser>> test = new Dictionary<string, List<ApplicationUser>>();
+
+            foreach (IdentityRole id in roles)
+            {
+                var list = new List<ApplicationUser>();
+                list = db.Users
+                        .Where(x => x.Roles.Select(y => y.RoleId).Contains(id.Id))
+                        .ToList();
+                test.Add(id.Name, list);
+            }
+
+            return Ok(test);
+
         }
 
 
@@ -55,6 +78,18 @@ namespace LMS.Server.Controllers
                 db.Courses.Remove(itemToRemove);
                 db.SaveChanges();
                 return Ok(db.Courses.ToList());
+
+
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> DeleteUser(ApplicationUser user)
+        {
+            var itemToRemove = db.Users.Find(user.Id);  // returns a single item.
+
+            db.Users.Remove(itemToRemove);
+            db.SaveChanges();
+            return Ok();
 
 
         }
