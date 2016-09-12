@@ -5,6 +5,7 @@ app.controller('signupController', ['$scope', '$http', 'API', '$location', '$tim
     $scope.message = "";
     $scope._Users;
     $scope._Roles;
+    $scope._UsersWithRoles;
     
     $scope.registration = {
         userName: "",
@@ -39,6 +40,13 @@ app.controller('signupController', ['$scope', '$http', 'API', '$location', '$tim
         }, 2000);
     }
 
+    $scope.deleteUser = function (id) {
+        API.get('api/admin/DeleteUser/', id).then(function (data) {
+            console.log(data);
+            $scope._Users = data;
+        });
+    };
+
     $scope.getUsers = function () {
         API.get('api/admin/GetAllUsers').then(function (data) {
             console.log(data);
@@ -56,6 +64,12 @@ app.controller('signupController', ['$scope', '$http', 'API', '$location', '$tim
                 data[i].selected = false;
             }
             $scope._Roles = data;
+        });
+    };
+
+    $scope.listUsersWithRoles = function () {
+        API.get('api/admin/GetUsersWithRoles').then(function (data) {
+            $scope._UsersWithRoles = data;
         });
     };
 
